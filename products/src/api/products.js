@@ -1,3 +1,4 @@
+const { CONNREFUSED } = require('dns');
 const ProductService = require('../services/product-service');
 const { PublishCustomerEvent, PublishShoppingEvent } = require('../utils');
 const UserAuth = require('./middlewares/auth')
@@ -63,15 +64,14 @@ module.exports = (app) => {
     });
      
     app.put('/wishlist',UserAuth, async (req,res,next) => {
-
         const { _id } = req.user;
-
         try {
-            const { data } = await service.GetProductPayload(_id, { productId: req.body._id}, 'ADD_TO_WIHLIST')
+            const { data } = await service.GetProductPayload(_id, { productId: req.body._id}, 'ADD_TO_WISHLIST')
             PublishCustomerEvent(data);
             return res.status(200).json(data.data.product);
-        } catch (err) {
             
+        } catch (err) {
+            next(err)
         }
     });
     
@@ -81,7 +81,7 @@ module.exports = (app) => {
         const productId = req.params.id;
 
         try {
-            const { data } = await service.GetProductPayload(_id, { productId }, 'REMOVE_TO_WIHLIST')
+            const { data } = await service.GetProductPayload(_id, { productId }, 'REMOVE_FROM_WISHLIST')
             PublishCustomerEvent(data);
             return res.status(200).json(data.data.product);
         } catch (err) {

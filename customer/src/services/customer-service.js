@@ -143,7 +143,6 @@ class CustomerService {
         const { event, data } =  payload;
 
         const { userId, product, order, qty } = data;
-        console.log(event)
         switch(event){
             case 'ADD_TO_WISHLIST':
             case 'REMOVE_FROM_WISHLIST':
@@ -157,9 +156,6 @@ class CustomerService {
                 break;
             case 'CREATE_ORDER':
                 this.ManageOrder(userId,order);
-                break;
-            case 'TEST':
-                console.log("WORKING..... SUBSCRIBE")
                 break;
             default:
                 break;

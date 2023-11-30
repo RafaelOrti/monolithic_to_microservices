@@ -49,6 +49,7 @@ module.exports = (app) => {
     try {
       const { _id } = req.user;
       const { data } = await service.GetProfile({ _id });
+      console.log(data,"3333e")
       return res.json(data);
     } catch (err) {
       next(err);
