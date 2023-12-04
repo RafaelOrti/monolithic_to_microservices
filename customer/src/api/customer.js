@@ -1,8 +1,10 @@
 const CustomerService = require("../services/customer-service");
 const UserAuth = require("./middlewares/auth");
+const { SubscribeMessage } = require('../utils');
 
-module.exports = (app) => {
+module.exports = (app, channel) => {
   const service = new CustomerService();
+  SubscribeMessage(channel, service)
 
   app.post("/signup", async (req, res, next) => {
     try {
@@ -49,7 +51,6 @@ module.exports = (app) => {
     try {
       const { _id } = req.user;
       const { data } = await service.GetProfile({ _id });
-      console.log(data,"3333e")
       return res.json(data);
     } catch (err) {
       next(err);
