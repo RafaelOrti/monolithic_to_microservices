@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  nosql-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: nosql-db
+    volumes:
+      - ./db/:data/db
