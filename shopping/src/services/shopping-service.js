@@ -1,5 +1,7 @@
 const { ShoppingRepository } = require("../database");
 const { FormateData } = require("../utils");
+const { APIError, BadRequestError } = require('../utils/app-errors')
+
 
 // All Business logic will be here
 class ShoppingService {
@@ -52,6 +54,8 @@ class ShoppingService {
 
   async SubscribeEvents(payload){
  
+    payload = JSON.parse(payload)
+
     const { event, data } =  payload;
 
     const { userId, product, qty } = data;
